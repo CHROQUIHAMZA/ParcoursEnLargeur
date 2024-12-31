@@ -15,6 +15,7 @@ public:
 	LST* creerNoeud(int value);
 	void inserer(int value);
 	void afficher();
+	void addList(LST* L);
 	~Liste();
 };
 

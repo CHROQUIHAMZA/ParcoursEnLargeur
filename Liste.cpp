@@ -37,7 +37,18 @@ void Liste::afficher()
     }
     cout << endl;
 }
+void Liste::addList(LST* ne) {
 
+    if (!L) {
+        L = ne;
+        return;
+    }
+    LST* courant = L;
+    while (courant->svt) courant = courant->svt;
+    courant->svt = ne;
+    return;
+
+}
 
 
 Liste::~Liste()

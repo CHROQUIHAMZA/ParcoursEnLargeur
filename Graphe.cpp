@@ -30,6 +30,9 @@ void Graphe::inserer(Liste* L, int index) {
     else {
         cout << "Index out of bounds!" << endl;
     }
+  
+
+
 }
 
 void Graphe::afficher() {
@@ -44,47 +47,57 @@ void Graphe::afficher() {
 
 void Graphe::BFS() const {
     if (G.empty()) {
-        cout << "Graphe vide" << endl;
+        cout << "Graphe vide." << endl;
         return;
     }
 
     int node;
     while (true) {
-        cout << "Give a node: ";
+        cout << "Donnez un nœud de départ : ";
         cin >> node;
 
-        if (node >= 0 && node < G.size() && G[node]) {
+        if (node >= 0 && node < G.size() && G[node] != nullptr) {
             break;
         }
         else {
-            cout << "Invalid node or no edges for this node!" << endl;
+            cout << "Nœud invalide ou sans connexions !" << endl;
         }
     }
 
-    vector<bool> visitedNode(G.size(), false);  // Use G.size() instead of nbrElem
+    vector<string> visitedNode(G.size(), "white"); 
     queue<int> q;
     q.push(node);
-    visitedNode[node] = true;
+    visitedNode[node] = "grey"; 
+
 
     while (!q.empty()) {
         int current = q.front();
         q.pop();
-        cout << current << " ";
 
+        cout << current << " " << endl;
+        visitedNode[current] = "black"; 
+
+        
         if (G[current]) {
-            LST* temp = G[current]->L;  // Make sure G[current] is valid
+            LST* temp = G[current]->L;
             while (temp) {
-                int currentNode = temp->value;
+                int neighbor = temp->value;
 
-                if (currentNode >= 0 && currentNode < G.size() && !visitedNode[currentNode]) {
-                    visitedNode[currentNode] = true;
-                    q.push(currentNode);
+                if (neighbor >= 0 && neighbor < G.size() && visitedNode[neighbor] == "white") {
+                    visitedNode[neighbor] = "grey"; 
+                    q.push(neighbor);
                 }
 
-                temp = temp->svt;  // Move to the next node
+                temp = temp->svt; 
             }
         }
 
     }
+
     cout << endl;
+
+    cout << "État final des nœuds :" << endl;
+    for (int i = 0; i < visitedNode.size(); ++i) {
+        cout << "Nœud " << i << " : " << visitedNode[i] << endl;
+    }
 }
