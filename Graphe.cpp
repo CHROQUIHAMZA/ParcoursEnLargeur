@@ -51,7 +51,7 @@ void Graphe::BFS() const {
         return;
     }
 
-    // Demander un nœud de départ
+    
     int node;
     while (true) {
         cout << "Donnez un neoud de depart : ";
@@ -65,42 +65,42 @@ void Graphe::BFS() const {
         }
     }
 
-    vector<string> visitedNode(G.size(), "white"); // Initialisation des couleurs des nœuds
+    vector<string> visitedNode(G.size(), "white"); 
     queue<int> q;
     q.push(node);
-    visitedNode[node] = "grey"; // Marquer comme en cours de traitement
+    visitedNode[node] = "grey"; 
 
     cout << "Debut du parcours BFS avec couleurs a partir du neoud " << node << " :" << endl;
 
     while (!q.empty()) {
-        // Afficher l'état actuel de la file
+        
         cout << "Etat de la file : [ ";
-        queue<int> tempQueue = q; // Copie temporaire de la file pour affichage
+        queue<int> tempQueue = q; 
         while (!tempQueue.empty()) {
             cout << tempQueue.front() << " ";
             tempQueue.pop();
         }
         cout << "]" << endl;
 
-        // Traiter l'élément en tête de la file
+      
         int current = q.front();
         q.pop();
         cout << "Traitement du neoud : " << current << " (grey -> black)" << endl;
-        visitedNode[current] = "black"; // Marquer comme terminé
+        visitedNode[current] = "black";
 
-        // Parcourir les voisins
+       
         if (G[current]) {
-            LST* temp = G[current]->L; // Accéder à la liste des voisins
+            LST* temp = G[current]->L;
             while (temp) {
                 int neighbor = temp->value;
 
                 if (neighbor >= 0 && neighbor < G.size() && visitedNode[neighbor] == "white") {
-                    visitedNode[neighbor] = "grey"; // Marquer comme en cours de traitement
+                    visitedNode[neighbor] = "grey"; 
                     q.push(neighbor);
                     cout << "Ajout du neoud " << neighbor << " dans la file (white -> grey)." << endl;
                 }
 
-                temp = temp->svt; // Passer au voisin suivant
+                temp = temp->svt; 
             }
         }
         cout << "neoud " << current << " termine." << endl;
@@ -109,7 +109,7 @@ void Graphe::BFS() const {
 
     cout << endl;
 
-    // Afficher les états finaux des nœuds
+   
     cout << "État final des neouds :" << endl;
     for (int i = 0; i < visitedNode.size(); ++i) {
         cout << "Neoud " << i << " : " << visitedNode[i] << endl;
