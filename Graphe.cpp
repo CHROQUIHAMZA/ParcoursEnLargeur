@@ -1,4 +1,4 @@
-#include "Graphe.h"
+﻿#include "Graphe.h"
 #include <queue>
 using namespace std;
 
@@ -51,53 +51,69 @@ void Graphe::BFS() const {
         return;
     }
 
+    // Demander un nœud de départ
     int node;
     while (true) {
-        cout << "Donnez un n�ud de d�part : ";
+        cout << "Donnez un neoud de depart : ";
         cin >> node;
 
         if (node >= 0 && node < G.size() && G[node] != nullptr) {
             break;
         }
         else {
-            cout << "N�ud invalide ou sans connexions !" << endl;
+            cout << "Neoud invalide ou sans connexions !" << endl;
         }
     }
 
-    vector<string> visitedNode(G.size(), "white"); 
+    vector<string> visitedNode(G.size(), "white"); // Initialisation des couleurs des nœuds
     queue<int> q;
     q.push(node);
-    visitedNode[node] = "grey"; 
+    visitedNode[node] = "grey"; // Marquer comme en cours de traitement
 
+    cout << "Debut du parcours BFS avec couleurs a partir du neoud " << node << " :" << endl;
 
     while (!q.empty()) {
+        // Afficher l'état actuel de la file
+        cout << "Etat de la file : [ ";
+        queue<int> tempQueue = q; // Copie temporaire de la file pour affichage
+        while (!tempQueue.empty()) {
+            cout << tempQueue.front() << " ";
+            tempQueue.pop();
+        }
+        cout << "]" << endl;
+
+        // Traiter l'élément en tête de la file
         int current = q.front();
         q.pop();
+        cout << "Traitement du neoud : " << current << " (grey -> black)" << endl;
+        visitedNode[current] = "black"; // Marquer comme terminé
 
-        cout << current << " " << endl;
-        visitedNode[current] = "black"; 
-
-        
+        // Parcourir les voisins
         if (G[current]) {
-            LST* temp = G[current]->L;
+            LST* temp = G[current]->L; // Accéder à la liste des voisins
             while (temp) {
                 int neighbor = temp->value;
 
                 if (neighbor >= 0 && neighbor < G.size() && visitedNode[neighbor] == "white") {
-                    visitedNode[neighbor] = "grey"; 
+                    visitedNode[neighbor] = "grey"; // Marquer comme en cours de traitement
                     q.push(neighbor);
+                    cout << "Ajout du neoud " << neighbor << " dans la file (white -> grey)." << endl;
                 }
 
-                temp = temp->svt; 
+                temp = temp->svt; // Passer au voisin suivant
             }
         }
-
+        cout << "neoud " << current << " termine." << endl;
+        cout << "--------------------" << endl;
     }
 
     cout << endl;
 
-    cout << "�tat final des n�uds :" << endl;
+    // Afficher les états finaux des nœuds
+    cout << "État final des neouds :" << endl;
     for (int i = 0; i < visitedNode.size(); ++i) {
-        cout << "N�ud " << i << " : " << visitedNode[i] << endl;
+        cout << "Neoud " << i << " : " << visitedNode[i] << endl;
     }
 }
+
+
